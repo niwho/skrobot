@@ -86,7 +86,7 @@ func (pp *Pump) StartLoop() {
 
 		case *slack.LatencyReport:
 			//fmt.Printf("Current latency: %v\n", ev.Value)
-			logs.Log(logs.F{"ev": ev}).Info("Current latency")
+			logs.Log(logs.F{"ev": ev}).Debug("Current latency")
 
 		case *slack.RTMError:
 			//fmt.Printf("Error: %s\n", ev.Error())

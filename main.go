@@ -16,8 +16,9 @@ import (
 func main() {
 	config.LoadConf("./conf.yml")
 
-	logs.InitLog("skrobot.log", 3, 5)
+	logs.InitLog("skrobot.log", 5, 3)
 
+	logs.Log(logs.F{"start": time.Now(), "token": config.Conf.AppToken}).Info()
 	timer.InitSimpeTimer()
 	go func() {
 		pump.InitPump().SetCommandHandler(command.InitCommand()).StartLoop()
@@ -49,7 +50,7 @@ func onStop(c chan os.Signal, timeout time.Duration, work func()) {
 
 
 func test(){
-	api := slack.New("xoxb-760186935424-759729619652-9aCpwBAHi0EC3i5Z6YyHb9Oc")
+	api := slack.New("your token")
 	// If you set debugging, it will log all requests to the console
 	// Useful when encountering issues
 	// api.SetDebug(true)

@@ -57,18 +57,22 @@ func (pp *Pump) StartLoop() {
 				continue
 			}
 			logs.Log(logs.F{"Message": ev, "channel": ev.Channel}).Info()
-			if !strings.HasPrefix(ev.Text, fmt.Sprintf("<@%s>", config.Conf.BotId)) {
-				continue
+			_, err := api.GetChannelInfo(ev.Channel)
+			if err == nil {
+				if !strings.HasPrefix(ev.Text, fmt.Sprintf("<@%s>", config.Conf.BotId)) {
+					continue
+				}
 			}
+
 			go func() {
-				result, err:= pp.cmd.DoCommand(ev.Text)
-				if err!=nil{
+				result, err := pp.cmd.DoCommand(ev.Text)
+				if err != nil {
 					logs.Log(logs.F{"cmd": ev.Text, "err": err.Error()}).Error()
 					api.SendMessage(ev.Channel,
 						slack.MsgOptionAsUser(true),
 						slack.MsgOptionUser(config.Conf.BotId),
 						slack.MsgOptionText(string(err.Error()), false))
-				}else {
+				} else {
 					api.SendMessage(ev.Channel,
 						slack.MsgOptionAsUser(true),
 						slack.MsgOptionUser(config.Conf.BotId),

@@ -64,9 +64,15 @@ func (pp *Pump) StartLoop() {
 				result, err:= pp.cmd.DoCommand(ev.Text)
 				if err!=nil{
 					logs.Log(logs.F{"cmd": ev.Text, "err": err.Error()}).Error()
-					api.SendMessage(ev.Channel, slack.MsgOptionText(string(err.Error()), false))
+					api.SendMessage(ev.Channel,
+						slack.MsgOptionAsUser(true),
+						slack.MsgOptionUser(config.Conf.BotId),
+						slack.MsgOptionText(string(err.Error()), false))
 				}else {
-					api.SendMessage(ev.Channel, slack.MsgOptionText(string(result), false))
+					api.SendMessage(ev.Channel,
+						slack.MsgOptionAsUser(true),
+						slack.MsgOptionUser(config.Conf.BotId),
+						slack.MsgOptionText(string(result), false))
 				}
 			}()
 

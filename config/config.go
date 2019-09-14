@@ -11,6 +11,7 @@ var Conf Config
 type Config struct {
 	AppToken string `yaml:"app_token"`
 	BotId    string `yaml:"bot_id"`
+	Suffix   string `yaml:"suffix"`
 }
 
 func LoadConf(filePath string) error {

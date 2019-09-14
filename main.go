@@ -16,7 +16,7 @@ import (
 func main() {
 	config.LoadConf("./conf.yml")
 
-	logs.InitLog("skrobot.log", 5, 3)
+	logs.InitLog("skrobot.log", 4, 3)
 
 	logs.Log(logs.F{"start": time.Now(), "token": config.Conf.AppToken}).Info()
 	timer.InitSimpeTimer()
